@@ -2,31 +2,318 @@
 \section{Auswertung}
 \label{sec:Auswertung}
 
-\begin{figure}
-  \centering
-  \includegraphics{plot.pdf}
-  \caption{Plot.}
-  \label{fig:plot}
+%#############################################################################################################
+%#############################################################################################################
+\subsection{Drehschieberpumpe}
+%#############################################################################################################
+%#############################################################################################################
+Die Drehschieberpumpe besitzt laut Herstellerangaben ein Saugvermögen zwischen 
+$\SI{4.6}{\cubic\metre\per\hour}$ und $\SI{5.5}{\cubic\metre\per\hour}$ \cite{Versuchsbeschreibung}.
+Im Folgenden wird das Saugvermögen aus den aufgenommenen Daten der Evakuierungsmessung
+und der Leckratenmessungen bestimmt. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Evakuierungsmessung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die nach Kapitel \ref{sec:Durchführung} aufgenommenen Daten sind im Anhang in Tabelle \ref{tab:Dreh_Evak}
+aufgelistet. Auch die Mittelwerte der drei Messungen, die systematische Unsicherheiten durch die 
+Messgeräte und die statistischen Unsicherheiten sind in Tabelle \ref{tab:Dreh_Evak} angegeben. 
+Die statistischen Unsicherheiten wurden dabei nach Gleichung \ref{eqn:statfehler} berechnet, 
+die systematischen Unsicherheiten entsprechen den Angaben aus Kapitel \ref{sec:unsicherheiten}.
+Da die systematischen die statistischen Unsicherheiten deutlich dominieren, werden in den 
+folgenden Berechnungen nur die systematischen Unsicherheiten betrachtet. Für die Zeitmessung 
+wurde die durch die Reaktionszeit der Experimentierenden entstehende Unsicherheit als 
+$\Delta t=\SI{0.2}{\second}$ angenommen. Auch diese Unsicherheit wird im Folgenden vernachlässigt.
+Durch Umstellen von Gleichung \ref{eqn:evakuierungskurve} ergibt sich der Zusammenhang
+\begin{equation*}
+  \ln{\left[\frac{p-p_E}{p_0-p_E}\right]}=-\frac{S}{V}\cdot t
+\end{equation*}
+mit dem erreichten Enddruck ${p_E=\SI{7.1\pm 0.7 e-3}{\milli\bar}}$ und einem Umgebungsdruck
+von ${p_0=\SI{1011 \pm 3}{\milli\bar}}$. 
+Das Saugvermögen kann somit aus einer linearen Regression der Form 
+\begin{equation}
+  y=ax+b
+  \label{eqn:gerade}
+\end{equation}
+bestimmt werden. Da das Saugvermögen jedoch vom Druck abhängig ist, werden mehrere 
+Regressionen für verschiedene Druckbereiche durchgeführt. Alle Regressionen werden 
+mit \textit{scipy} \cite{scipy} berechnet. Diese sind in Abbildung 
+\ref{fig:dreh_evak} graphisch dargestellt, welche wie alle weiteren Abbildungen 
+mit \textit{matplotlib} \cite{matplotlib} erstellt wurde.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{build/Dreh_Evak.pdf}
+    \caption{Evakuierungskurve für die Drehschieberpumpe in halblogarithmischer Darstellung mit mehreren linearen Regressionen für verschiedene Druckbereiche. Die Regressionsparameter und die zugehörigen Druckbereiche finden sich in Tabelle \ref{tab:Dreh_Evak_para}.}
+    \label{fig:dreh_evak}
 \end{figure}
-
-\begin{table}
+\noindent
+Die zugehörigen Parameter der Regressionen sind in Tabelle \ref{tab:Dreh_Evak_para} gegeben.
+\begin{table}[H]
   \centering
-  \caption{Eine Beispieltabelle mit Messdaten.}
-  \label{tab:tabelle}
-  \sisetup{table-format=1.1, per-mode=reciprocal}
-  \begin{tblr}{
-      colspec = {S[table-format=3.0] S[table-format=2.1] S},
-      row{1} = {guard, mode=math},
-      vline{4} = {2}{-}{text=\clap{$\pm$}},
-    }
-    \toprule
-    U \mathbin{/} \unit{\volt} & I \mathbin{/} \unit{\micro\ampere} & \SetCell[c=2]{c} N \mathbin{/} \unit{\per\second} & \\
-    \midrule
-    360 & 0.1 & 98.3 & 0.9 \\
-    400 & 0.2 & 99.8 & 1.0 \\
-    420 & 0.2 & 99.1 & 0.9 \\
-    \bottomrule
-  \end{tblr}
+    \caption{Regressionsparameter für die Evakuierungsmessung für die Drehschieberpumpe.}
+    \label{tab:Dreh_Evak_para}
+    \sisetup{table-format=1.3}
+    \begin{tabular}{S[table-format=1.0] S[table-text-alignment=left] @{${}\quad\text{bis}\quad{}$} S[table-text-alignment=left] S[table-format=2.4] @{${}\pm{}$} S[table-format=1.4] S[table-format=2.2] @{${}\pm{}$} S[table-format=1.2]}
+      \toprule
+      {Regression} & \multicolumn{2}{c}{Druckbereich} & \multicolumn{2}{c}{$a [\si{\per\second}]$} & \multicolumn{2}{c}{$b$} \\
+      \midrule
+      1 &$\SI{1.01 \pm 0.10}{\bar}      $&$\SI{2.40 \pm 0.24}{\milli\bar} $ & -0.0307 & 0.0005 & -0.09 & 0.06\\
+      2 &$\SI{2.00 \pm 0.20}{\milli\bar}$&$\SI{0.53 \pm 0.05}{\milli\bar} $ & -0.0110 & 0.0011 & -4.02 & 0.29\\
+      3 &$\SI{0.49 \pm 0.05}{\milli\bar}$&$\SI{0.160\pm 0.016}{\milli\bar}$ & -0.0043 & 0.0004 & -6.25 & 0.17\\
+      \bottomrule
+    \end{tabular}
 \end{table}
-
-Siehe \autoref{fig:plot} und \autoref{tab:tabelle}!
+\noindent
+Unter Ausnutzung von 
+\begin{equation}
+  S=-aV
+  \label{eqn:evak}
+\end{equation}
+ergibt sich mit $V=\SI{34\pm 3.4}{\litre}$ \cite{Versuchsbeschreibung} die in Tabelle \ref{tab:Saug_Dreh_Evak}
+aufgelisteten Saugleistungen in den jeweiligen Druckbereichen.
+\begin{table}[H]
+  \centering
+    \caption{Mittelwerte der gemessenen Drücke bei der Leckratenmessung der Drehschieberpumpe mit statistischen und systematischen Unsicherheiten. Der Gleichgewichtsdruck beträgt $p_g=\SI{0.50 \pm 0.05}{\milli\bar}$.}
+    \label{tab:Saug_Dreh_Evak}
+    \sisetup{table-format=1.2}
+    \begin{tabular}{S[table-text-alignment=left] @{${}\quad\text{bis}\quad{}$} S[table-text-alignment=left] S @{${}\pm{}$} S}
+      \toprule
+      \multicolumn{2}{c}{Druckbereich} & \multicolumn{2}{c}{$S_\text{Dreh} [\si{\cubic\metre\per\hour}]$}\\
+      \midrule
+      $\SI{1.01 \pm 0.10}{\bar}      $&$\SI{2.40 \pm 0.24}{\milli\bar} $ & 3.8  & 0.4 \\
+      $\SI{2.00 \pm 0.20}{\milli\bar}$&$\SI{0.53 \pm 0.05}{\milli\bar} $ & 1.35 & 0.19\\
+      $\SI{0.49 \pm 0.05}{\milli\bar}$&$\SI{0.160\pm 0.016}{\milli\bar}$ & 0.53 & 0.07\\
+      \bottomrule
+    \end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Leckratenmessung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die nach Kapitel \ref{sec:Durchführung} aufgenommenen Messdaten der Leckratenmessung sind 
+für je einen Gleichgewichtsdruck $p_g$ in den Tabellen \ref{tab:Dreh_Leck1} bis \ref{tab:Dreh_Leck4}
+gelistet. Analog zu der Evakuierungsmessung werden in den weiteren Berechnungen nur die systematischen
+Unsicherheiten betrachtet, da diese die statistischen dominieren. 
+%Tabellen?
+Durch die Anpassung einer linearen Funktion \ref{eqn:gerade} an die Messdaten kann über den 
+Zusammenhang \ref{eqn:leckratesaugvermögen} das Saugvermögen nach
+\begin{equation}
+  S=\frac{V_0}{p_G}\frac{\Delta p}{\Delta t}=\frac{V_0}{p_G}\cdot a
+  \label{eqn:Leck2}
+\end{equation} 
+berechnet werden.
+In den Abbildungen \ref{fig:dreh_leck1} bis \ref{fig:dreh_leck4} sind die Messdaten mit der 
+berechneten Regression visualisiert.
+Die Regressionsparameter sind in Tabelle \ref{tab:Dreh_Leck_para} enumiert.
+\begin{table}[H]
+  \centering
+    \caption{Regressionsparameter für die Leckratenmessung für die Drehschieberpumpe.}
+    \label{tab:Dreh_Leck_para}
+    \sisetup{table-format=3.1}
+    \begin{tabular}{S[table-format=3.2] @{${}\pm{}$} S[table-format=1.2] S[table-format=1.4] @{${}\pm{}$} S[table-format=1.4] S[table-format=3.2] @{${}\pm{}$} S[table-format=1.2]}
+      \toprule
+      \multicolumn{2}{c}{$p_g [\si{\milli\bar}$]} & \multicolumn{2}{c}{$a [\si{\per\second}]$} & \multicolumn{2}{c}{$b$} \\
+      \midrule
+      0.50   & 0.05& 0.0102 & 0.0010 & 1.61  & 0.10\\
+      10     & 1   & 0.374  & 0.005  & 15.85 & 0.33\\
+      50.00  & 0.15& 1.753  & 0.021  & 57.8  & 1.3\\
+      100.0  & 0.3 & 3.37   & 0.08   & 113.1 & 2.9\\
+      \bottomrule
+    \end{tabular}
+\end{table}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Dreh_Leck_1.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Drehschieberpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{0.50 \pm 0.05}{\milli\bar}$.}
+    \label{fig:dreh_leck1}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Dreh_Leck_2.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Drehschieberpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{10 \pm 1}{\milli\bar}$.}
+    \label{fig:dreh_leck2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Dreh_Leck_3.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Drehschieberpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{50.00 \pm 0.15}{\milli\bar}$.}
+    \label{fig:dreh_leck3}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Dreh_Leck_4.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Drehschieberpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{100.0 \pm 0.3}{\milli\bar}$.}
+    \label{fig:dreh_leck4}
+\end{figure}
+\noindent
+Durch Einsetzen in Gleichung \ref{eqn:Leck2} ergeben sich die Saugvermögen für die jeweiligen Gleichgewichtsdrücke.
+Diese sind in Tabelle \ref{tab:Saug_Dreh_Leck} aufgelistet.
+\begin{table}[H]
+  \centering
+    \caption{Berechneten Saugleistungen für die Leckratenmessung der Drehschieberpumpe für verschiedene Gleichgewichtsdrücke $p_g$.}
+    \label{tab:Saug_Dreh_Leck}
+    \sisetup{table-format=1.1}
+    \begin{tabular}{S[table-format=3.1] @{${}\pm{}$} S[table-format=1.2] S @{${}\pm{}$} S}
+      \toprule
+      \multicolumn{2}{c}{$p_g [\si{\milli\bar}]$} & \multicolumn{2}{c}{$S [\si{\cubic\metre\per\hour}]$}\\
+      \midrule
+      0.5& 0.05& 2.5 & 0.4\\
+      10 & 1   & 4.6 & 0.5\\
+      50 & 0.15& 4.3 & 0.5\\
+      100& 0.3 & 4.1 & 0.4\\
+      \bottomrule
+    \end{tabular}
+\end{table}
+%##############################################################################################################
+%##############################################################################################################
+\subsection{Turbomolekularpumpe}
+%##############################################################################################################
+%##############################################################################################################
+Analog zu der Drehschieberpumpe wird für die Turbomolekularpumpe das Saugvermögen über die 
+Evakuierungsmessung und über die Leckratenmessungen ermittelt. Laut Herstellerangaben
+beträgt das Saugvermögen $S=\SI{77}{\litre\per\second}$ \cite{Versuchsbeschreibung}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Evakuierungsmessung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die Daten für die Evakuierungsmessung der Turbomolekularpumpe sind in Tabelle \ref{tab:Turbo_Evak}
+aufgelistet.
+%Tabelle?
+Auch mit diesen Daten wird 
+\begin{equation*}
+  \ln{\left[\frac{p-p_E}{p_0-p_E}\right]}
+\end{equation*}
+gebildet, damit über mehrere Regressionen der Form \ref{eqn:gerade} die Saugvermögen für 
+verschiedene Druckbereiche bestimmt werden können. Der erreichte Enddruck ist 
+${p_E=\SI{7.7 \pm 2.3 e-6}{\milli\bar}}$. Der Startdruck $p_0$ ist bei dieser Messung nicht der 
+Umgebungsdruck, sondern ${p_0=\SI{5.0 \pm 1.5 e-3}{\milli\bar}}$. Die Parameter der Regressionen 
+sind in Tabelle \ref{tab:Turbo_Evak_para} aufgelistet. Die dazugehörigen Regressionen 
+sind zudem in Abbildung \ref{fig:turbo_evak} dargestellt.
+\begin{table}[H]
+    \centering
+      \caption{Regressionsparameter für die Evakuierungsmessung für die Turbomolekularpumpe.}
+      \label{tab:Turbo_Evak_para}
+      \sisetup{table-format=2.3}
+      \begin{tabular}{S[table-format=1.0] S @{${}\quad\text{bis}\quad{}$} S S @{${}\pm{}$} S S[table-format=2.1] @{${}\pm{}$} S[table-format=1.1]}
+        \toprule
+        {Regression} & \multicolumn{2}{c}{Druckbereich} & \multicolumn{2}{c}{$a [\si{\per\second}]$} & \multicolumn{2}{c}{$b$} \\
+        \midrule
+        1 & $\SI{5.1 \pm 1.5 e-3}{\milli\bar}$ & $\SI{3.0 \pm 0.9 e-4}{\milli\bar}$ & -0.490 & 0.010 & -0.1 & 0.4\\
+        2 & $\SI{3.0 \pm 0.9 e-4}{\milli\bar}$ & $\SI{3.7 \pm 1.1 e-5}{\milli\bar}$ & -0.19  & 0.04  & -1.8 & 0.5\\
+        3 & $\SI{3.1 \pm 0.9 e-5}{\milli\bar}$ & $\SI{2.4 \pm 0.7 e-5}{\milli\bar}$ & -0.04  & 0.06  & -4.5 & 1.6\\
+        4 & $\SI{2.2 \pm 0.6 e-5}{\milli\bar}$ & $\SI{1.3 \pm 0.4 e-5}{\milli\bar}$ & -0.010 & 0.006 & -5.6 & 0.5\\
+        \bottomrule
+      \end{tabular}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{build/Turbo_Evak.pdf}
+    \caption{Evakuierungskurve für die Turbomolekularpumpe in halblogarithmischer Darstellung mit mehreren linearen Regressionen für verschiedene Druckbereiche.}
+    \label{fig:turbo_evak}
+\end{figure}
+\noindent
+Das Saugvermögen ergibt sich aus Gleichung \ref{eqn:evak} mit einem Volumen von $V=\SI{33 \pm 3.3}{\litre}$.
+Eine Auflistung der Saugvermögen ist durch Tabelle \ref{tab:Saug_Turbo_Evak} gegeben.
+\begin{table}[H]
+  \centering
+    \caption{Mittelwerte der gemessenen Drücke bei der Leckratenmessung der Drehschieberpumpe mit statistischen und systematischen Unsicherheiten. Der Gleichgewichtsdruck beträgt $p_g=\SI{0.50 \pm 0.05}{\milli\bar}$.}
+    \label{tab:Saug_Turbo_Evak}
+    \sisetup{table-format=1.2}
+    \begin{tabular}{S[table-text-alignment=left] @{${}\quad\text{bis}\quad{}$} S[table-text-alignment=left] S[table-format=2.1] @{${}\pm{}$} S[table-format=2.1]}
+      \toprule
+      \multicolumn{2}{c}{Druckbereich} & \multicolumn{2}{c}{$S_\text{Dreh} [\si{\cubic\metre\per\hour}]$}\\
+      \midrule
+      $\SI{5.1 \pm 1.5 e-3}{\milli\bar}$ & $\SI{3.0 \pm 0.9 e-4}{\milli\bar}$ & 58 & 13\\
+      $\SI{3.0 \pm 0.9 e-4}{\milli\bar}$ & $\SI{3.7 \pm 1.1 e-5}{\milli\bar}$ & 22 &  6\\
+      $\SI{3.1 \pm 0.9 e-5}{\milli\bar}$ & $\SI{2.4 \pm 0.7 e-5}{\milli\bar}$ &  5 &  8\\
+      $\SI{2.2 \pm 0.6 e-5}{\milli\bar}$ & $\SI{1.3 \pm 0.4 e-5}{\milli\bar}$ & 1.2&0.8\\
+      \bottomrule
+    \end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Leckratenmessung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In den Tabellen \ref{tab:Turbo_Leck1} bis \ref{tab:Turbo_Leck4} sind die aufgenommenen Daten, die 
+Mittelwerte aus den Messungen und die systematischen und statistischen Unsicherheiten gelistet.
+Erneut werden nur systematische Unsicherheiten betrachtet, da diese deutlich größer sind als die 
+statistischen. 
+%Tabelle
+An die Messdaten werden durch Ausgleichsrechnung Funktionen der Form \ref{eqn:gerade} angepasst.
+Da das Modell einer linearen Funktion die Daten jedoch unzureichend beschreibt, werden 
+für jeden Gleichgewichtsdruck jeweils zwei Regressionen bestimmt, eine im Bereich niedriger 
+und eine im Bereich höherer Drücke. Die berechneten Parameter sind in Tabelle \ref{tab:Turbo_Leck_para}
+aufgelistete. Die Daten mit den Regressionen finden sich in den Abbildungen \ref{fig:turbo_leck1} 
+bis \ref{fig:turbo_leck4}.
+\begin{table}[H]
+    \centering
+      \caption{Regressionsparameter für die Leckratenmessung für die Turbomolekularpumpe.}
+      \label{tab:Turbo_Leck_para}
+      \sisetup{table-format=3.1}
+      \begin{tabular}{S S[table-format=1.4] @{${}\pm{}$} S[table-format=1.4] S[table-format=2.3] @{${}\pm{}$} S[table-format=1.3]}
+        \toprule
+        {$p_g [\si{\milli\bar}$]} & \multicolumn{2}{c}{$a [\si{\per\second}]$} & \multicolumn{2}{c}{$b$} \\
+        \midrule
+        $\num{5.0 \pm 1.5 e-5}$  & 0.0102 & 0.0014 & 0.065 & 0.014\\
+                                 & 0.015  & 0.004  & -0.32 & 0.37 \\
+        \midrule
+        $\num{7.0 \pm 2.1 e-5}$  & 0.0141 & 0.0019 & 0.085 & 0.018\\
+                                 & 0.027  & 0.006  & -0.5  & 0.4  \\
+        \midrule
+        $\num{1.0 \pm 0.3 e-4}$  & 0.228  & 0.003  & 0.11  & 0.03 \\
+                                 & 0.055  & 0.012  & -1.2  & 0.8  \\
+        \midrule
+        $\num{2.0 \pm 0.6 e-4}$  & 0.16   & 0.03   & -0.5  & 0.5  \\
+                                 & 0.16   & 0.05   & 0.4   & 3.7   \\
+        \bottomrule
+      \end{tabular}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Turbo_Leck_1.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Turbomolekularpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{5 \pm 1.5 e-5}{\milli\bar}$.}
+    \label{fig:turbo_leck1}
+\end{figure}
+\noindent
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Turbo_Leck_2.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Turbomolekularpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{7 \pm 2.1 e-5}{\milli\bar}$.}
+    \label{fig:turbo_leck2}
+\end{figure}
+\noindent
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Turbo_Leck_3.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Turbomolekularpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{1 \pm 0.3 e-4}{\milli\bar}$.}
+    \label{fig:turbo_leck3}
+\end{figure}
+\noindent
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/Turbo_Leck_4.pdf}
+    \caption{Druck in Abhängigkeit der Zeit für die Leckratenmessung für die Turbomolekularpumpe mit linearer Regression. Der eingestellte Gleichgewichtsdruck beträgt $p_g=\SI{2 \pm 0.6 e-4}{\milli\bar}$.}
+    \label{fig:turbo_leck4}
+\end{figure}
+\noindent
+Durch Einsetzen der Parameter in Gleichung \ref{eqn:Leck2} ergeben sich die Saugvermögen, welche in 
+Tabelle \ref{tab:Saug_Turbo_Leck} aufgelistet sind.
+\begin{table}[H]
+  \centering
+    \caption{Berechneten Saugvermögen der Turbomolekularpumpe mittls Leckratenmessung für verschiedene Gleichgewichtsdrücke $p_g$.}
+    \label{tab:Saug_Turbo_Leck}
+    \sisetup{table-format=3.1}
+    \begin{tabular}{S S[table-format=2.0] @{${}\pm{}$} S[table-format=2.0]}
+      \toprule
+      {$p_g [\si{\milli\bar}$]} & \multicolumn{2}{c}{$S [\si{\cubic\metre\per\hour}]$} \\
+      \midrule
+      $\num{5.0 \pm 1.5 e-5}$  & 25 & 9 \\
+                               & 38 & 16\\
+      \midrule
+      $\num{7.0 \pm 2.1 e-5}$  & 25 & 8 \\
+                               & 46 & 18\\
+      \midrule
+      $\num{1.0 \pm 0.3 e-4}$  & 28 & 10\\
+                               & 67 & 26\\
+      \midrule
+      $\num{2.0 \pm 0.6 e-4}$  & 98 & 35\\
+                               & 97 & 42\\
+      \bottomrule
+    \end{tabular}
+\end{table}
