@@ -161,6 +161,14 @@ Durch einmal zeitliches ableit und multiplizieren mit $p$ kann die zeitliche Än
 \begin{equation}
 \frac{\text{d}V}{\text{d}t} = S = - \frac{V}{p} \frac{\text{d}p}{\text{d}t}
 \end{equation}
-Die so erhaltene Differentialgleichung wird mittels Exponentialansatz gelöst, hierzu werden im Exponenten 
+Die so erhaltene Differentialgleichung wird mittels Exponentialansatz gelöst, hierzu werden im Exponenten das Saugvermögen $S$, die Zeit $t$ und das 
+Volumen des Rezipientne $V_0$ eingesetzt, zusätzlich wird noch der Startdruck $p_0$ und der sich einstellende Enddruck $p_E$ benötigt. Der Enddruck 
+hängt von der verwendeten Pumpe und möglichen Desorptionen und Lecks ab, da sich aus diesen eine Gleichgewichtslage einstellt. 
+Somit ergibt sich \autoref{eqn:evak} als Formel für die Evakuierungskurve.
+\begin{equation}
+    p(t) = (p_0 - p_\text{E}) \text{exp}\left( - \frac{S}{V_0}t \right) + p_\text{E}
+    \label{eqn:evak}
+\end{equation}
+Mithilfe der Formel wird mittels umstellen nach dem Saugvermögen, dieses berechnet.
 \subsubsection{Die Leckratenmessung}
 
