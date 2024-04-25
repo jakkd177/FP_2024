@@ -132,11 +132,14 @@ Gemessen wird hierbei die Veränderung des Wiederstandes eines Glühdrahtes welc
 wird. Zur Messung des Wiederstandes wird letztendlich eine Wheatstone-Brücke verwendet und mit diesem eine Temperatur ermittelt welche wiederum 
 auf den Druck im Rezipienten zurück geführt wird.
  \item Penning-Vakuummeter:\\
- 
+ Hierbei wird auch von einem Kalthkathoden-Ionisationsvakuumeter gesprochen. Die zur Ionisation verwendeten Elektronen werden hier mittels 
+ elektrischen Feld frei. Gemessen wird der Entladungsstrom, sprich die Ionisierten Atome welche zur Kathode beschleunigt werden.
  \item Bayard-Alpert-Vakuummeter:\\
- 
+ Dieser Typ wird auch als Glükathoden-Ionisationsvakuumeter bezeichnet.
+ Die arbeitsweis ist analog zum Penning-Vakuummeter, jedoch werden hier die Elektronen mittels thermischer Emission Freigesetzt.
  \item Piezo-Vakuummeter:\\
- 
+ Die abgabe einer Spannung wenn eine Piezo-Kristall einer Kraft ausgesetzt wird ist in diesem Vakuumeter der sich zur Nutzengemachte 
+ Vorgang. Mittels der so gemssen Spannung kann auf den Druck im System zurückgeschlossen werden. Aufgrund der ähnlichen Arbeitsbereiche werden Piezo- sowie Pirani-Vakuummeter meist in einem Messgerät verbaut 
 \end{itemize}
 
 \subsection{Bestimmung des Saugvermögens}
@@ -149,6 +152,15 @@ vermindert und gibt den reziproken Strömungswiederstand an. Somit ergibt sich d
 Das Saugvermögen kann auf unterschiedliche Arten bestimmt werden in diesem Versuch geschieht dies auf zwei Arten, welche nun 
 kurz beschrieben werden.
 \subsubsection{Die Evakuierungskurve}
-
+Augehend von einem idealen Gas und der \autoref{eqn:startherleit} wird nun das effektive Saugvermögen im Falle der Evakuierungskurve hergeleitet.
+\begin{equation}
+    p\cdot V\,=\, \text{const}
+    \label{eqn:startherleit}
+\end{equation}
+Durch einmal zeitliches ableit und multiplizieren mit $p$ kann die zeitliche Änderung des Volumens als Saugvermögen $S$ definiert werden.
+\begin{equation}
+\frac{\text{d}V}{\text{d}t} = S = - \frac{V}{p} \frac{\text{d}p}{\text{d}t}
+\end{equation}
+Die so erhaltene Differentialgleichung wird mittels Exponentialansatz gelöst, hierzu werden im Exponenten 
 \subsubsection{Die Leckratenmessung}
 
