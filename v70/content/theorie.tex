@@ -38,7 +38,7 @@ Erde ist, über ein Vakuum gesprochen.\\
 In diesem Versuch wird mit guter Näherung das Gas als ideales Gas angenommen. Die Folge hier raus ist das sämtliche Wechselwirkungen 
 als vollkommende elastische Stöße geschehen und die Teilchen ohne Ausdehnung sind. Desweiteren führt uns dies zur idealen Glasgleichung:
 \begin {equation}
- p\cdot V\,=\, N\cdot K_B\cdot T
+  p\cdot V\,=\, N\cdot K_\text{B}\cdot T
 \label{eqn:idealgas}
 \end{equation}
 in dieser stehen $p$ für den Druck, $V$ für das Volumen, $N$ die Teilchenzahl, $T$ die Temperatur und $k_B$ für die Boltzmann Konstante. 
@@ -146,7 +146,7 @@ auf den Druck im Rezipienten zurück geführt wird.
 Bei der Bestimmung des Saugvermögens ist der Leitwert zu beachten, durch diesen wird das theoretische Saugvermögen $S_0$
 vermindert und gibt den reziproken Strömungswiederstand an. Somit ergibt sich das effiktive Saugvermögen als 
 \begin {equation}
- S_{eff}\,=\, \frac{S_0\cdot L}{S_0+L}.
+ S_{eff}\,=\, \frac{S_\text{0}\cdot L}{S_\text{0}+L}.
 \label{eqn:effsaug}
 \end{equation}
 Das Saugvermögen kann auf unterschiedliche Arten bestimmt werden in diesem Versuch geschieht dies auf zwei Arten, welche nun 
@@ -171,4 +171,15 @@ Somit ergibt sich \autoref{eqn:evak} als Formel für die Evakuierungskurve.
 \end{equation}
 Mithilfe der Formel wird mittels umstellen nach dem Saugvermögen, dieses berechnet.
 \subsubsection{Die Leckratenmessung}
+Bei der Leckratenmessung muss zunächst die Leckrate $Q$ über den Gleichgewichtsdruck $p_\text{g}$ definiert werden.
+\begin{align}
+    S = \frac{Q}{p_\text{g}}
+\\
+Q = V_0 \frac{\Delta p}{\Delta t}
+\end{align}
+ Hiermit lässt sich wiederum das Saugvermögen der Pumpe definieren als
+ \begin{equation}   
+    S = \frac{V_0}{p_\text{g}} \cdot \frac{\Delta p}{\Delta t.}
+ \end{equation}
+ Die Steigung der so erhalten Kurve gibt das Saugvermögen der Pumpe bei den jeweiligen Gleichgewichtsdrücken an.
 
